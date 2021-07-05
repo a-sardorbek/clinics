@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bemor Qo'shish</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <link href="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="./plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <!-- Page plugins css -->
+    <link href="./plugins/clockpicker/dist/jquery-clockpicker.min.css" rel="stylesheet">
+    <!-- Color picker plugins css -->
+    <link href="./plugins/jquery-asColorPicker-master/css/asColorPicker.css" rel="stylesheet">
+    <!-- Date picker plugins css -->
+    <link href="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- Daterange picker plugins css -->
+    <link href="./plugins/timepicker/bootstrap-timepicker.min.css" rel="stylesheet">
+    <link href="./plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        .btn {
+            background-color: DodgerBlue;
+            border: none;
+            color: white;
+            padding: 10px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Darker background on mouse-over */
+        .btn:hover {
+            background-color: RoyalBlue;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div>
+                <a href="/">
+                    <img src="images/lorent1.jpg"   width="250px" height="90px">
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Lorent</li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientList"  aria-expanded="false">
+                            <i  class="icon-plus menu-icon"></i><span class="nav-text">Bemor Qo'shish</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientListChange"  aria-expanded="false">
+                            <i  class="icon-user menu-icon"></i><span class="nav-text">Ro'yhat</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientListToday"  aria-expanded="false">
+                            <i  class="icon-user menu-icon"></i><span class="nav-text">Kunlik Ro'yhat</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientListDeleted"  aria-expanded="false">
+                            <i  class="icon-user menu-icon"></i><span class="nav-text">Axlat Quti</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item  active">
+                        <a sec:authorize="isAnonymous()"  id = "birxil"  href="/login" class='sidebar-link '>
+                            <i class="bi bi-file-earmark-medical-fill icon-login"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item active ">
+                        <a sec:authorize="isAuthenticated()"  id = "chiqishId"  href="/logout" class='sidebar-link '>
+                            <i class="bi bi-file-earmark-medical-fill icon-logout"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <br>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-validation">
+                                    <form th:action="@{/saveDaily}" th:object="${newPatient}" class="form-valide" action="#" method="post">
+
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username">Ism <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input  th:field="*{name}" required type="text" autocomplete="OFF" class="form-control" id="val-username" name="val-username" placeholder="Ism kiriting..">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-email">Familiya <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" th:field="*{surname}" required  autocomplete="OFF" class="form-control" id="val-email" name="val-email" placeholder="Familiya kiriting..">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-date">Tugilgan Kun <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="date" th:field="*{date}" class="form-control" id="val-date" name="val-email" placeholder="Tugilgan Kun kiriting..">
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-password">Yashash Manzil <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" th:field="*{address}" autocomplete="OFF" class="form-control" id="val-password" name="val-password" placeholder="Manzilni kiriting..">
+                                            </div>
+
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-password">Telefon <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" maxlength="9" th:field="*{phone}" autocomplete="OFF" class="form-control" id="numberField" name="val-phone" placeholder="Nomerni kiriting..">
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-payment">To'lov <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" th:field="*{payment}" autocomplete="OFF" class="form-control" id="tolovField" name="val-password" placeholder="To'lov miqdorini kiriting..">
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="form-group row">
+                                            <div class="col-lg-8 ml-auto">
+                                                <button type="submit" class="btn btn-primary">Saqlash</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-title">
+                                                <h4>Oxirgi bemor ma'lumoti</h4>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Ism</th>
+                                                        <th>Familiya</th>
+                                                        <th>Tugulgan Kun</th>
+                                                        <th>Yashash Manzil</th>
+                                                        <th>To'lov</th>
+                                                        <th>Telefon</th>
+                                                        <th>O'zgartirish</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    <tr th:each="p : ${listpatient}">
+
+                                                        <td th:text="${p.name}"/>
+                                                        <td th:text="${p.surname}"/>
+                                                        <td th:text="${p.date}"/>
+                                                        <td th:text="${p.address}"/>
+                                                        <td th:text="${p.payment}"/>
+                                                        <td th:text="${p.phone}"/>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <a  th:href="@{/updatePatient/{id}(id=${p.id})}" class="btn"  id="editButton" ><i class="fa fa-pencil"></i></a>
+                                                                &nbsp
+                                                                &nbsp
+                                                                <a  th:href="@{/deletePatient/{id}(id=${p.id})}" class="btn"  id="deleteButton" ><i class="fa fa-trash"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+
+    <script src="./plugins/validation/jquery.validate.min.js"></script>
+    <script src="./plugins/validation/jquery.validate-init.js"></script>
+
+
+
+    <script src="./plugins/moment/moment.js"></script>
+    <script src="./plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Clock Plugin JavaScript -->
+    <script src="./plugins/clockpicker/dist/jquery-clockpicker.min.js"></script>
+    <!-- Color Picker Plugin JavaScript -->
+    <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asColor.js"></script>
+    <script src="./plugins/jquery-asColorPicker-master/libs/jquery-asGradient.js"></script>
+    <script src="./plugins/jquery-asColorPicker-master/dist/jquery-asColorPicker.min.js"></script>
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="./plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <!-- Date range Plugin JavaScript -->
+    <script src="./plugins/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="./plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <script src="./js/plugins-init/form-pickers-init.js"></script>
+
+
+        <script>
+            $("#date_input").on("change", function () {
+                $(this).css("color", "rgba(0,0,0,0)").siblings(".datepicker_label").css({ "text-align":"center",'font-weight':'bold', position: "absolute",left: "-30px", top:"10px",width:$(this).width()}).text($(this).val().length == 0 ? "" : ($.datepicker.formatDate($(this).attr("dateformat"), new Date($(this).val()))));
+            });
+        </script>
+        
+        <script>
+        var userName = document.querySelector('#numberField');
+        var tolovName = document.querySelector('#tolovField');
+
+userName.addEventListener('input', restrictNumber);
+tolovName.addEventListener('input', restrictNumber);
+
+function restrictNumber (e) {  
+  var newValue = this.value.replace(new RegExp(/[^\d]/,'ig'), "");
+  this.value = newValue;
+}
+        
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>
+
+
+
+
+</body>
+
+</html>

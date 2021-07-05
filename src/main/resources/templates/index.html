@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lorent</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Pignose Calender -->
+    <link href="./plugins/pg-calendar/css/pignose.calendar.min.css" rel="stylesheet">
+    <!-- Chartist -->
+    <link rel="stylesheet" href="./plugins/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="./plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css">
+    <!-- Custom Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .btn {
+            background-color: DodgerBlue;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            position: relative;
+            top:15px;
+        }
+
+        .danger{
+            background-color: red;
+        }
+
+        /* Darker background on mouse-over */
+        .btn:hover {
+            background-color: RoyalBlue;
+        }
+        .danger:hover{
+            background: darkred;
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div >
+                <a href="/">
+                    <img src="images/lorent1.jpg"   width="250px" height="90px">
+                   
+                    
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+
+                    <li class="sidebar-item  active">
+                        <a sec:authorize="isAnonymous()"  id = "birxil1"  href="/login" class="btn">
+                            <i class="bi bi-file-earmark-medical-fill icon-login"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item active ">
+                        <a sec:authorize="isAuthenticated()"  id = "chiqishId2"  href="/logout" class="btn danger">
+                            <i class="bi bi-file-earmark-medical-fill icon-logout"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label">Menu</li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientList"  aria-expanded="false">
+                            <i  class="icon-plus menu-icon"></i><span class="nav-text">Bemor Qo'shish</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientListChange"  aria-expanded="false">
+                            <i  class="icon-user menu-icon"></i><span class="nav-text">Ro'yhat</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientListToday"  aria-expanded="false">
+                            <i  class="icon-user menu-icon"></i><span class="nav-text">Kunlik Ro'yhat</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a sec:authorize="hasRole('RECEPTION')" class="has-arrow" href="/patientListDeleted"  aria-expanded="false">
+                            <i  class="icon-user menu-icon"></i><span class="nav-text">Axlat Quti</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item  active">
+                        <a sec:authorize="isAnonymous()"  id = "birxil"  href="/login" class='sidebar-link '>
+                            <i class="bi bi-file-earmark-medical-fill icon-login"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item active ">
+                        <a sec:authorize="isAuthenticated()"  id = "chiqishId"  href="/logout" class='sidebar-link '>
+                            <i class="bi bi-file-earmark-medical-fill icon-logout"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body pb-0 d-flex justify-content-between">
+                                        <div>
+                                           <!--<h4 class="mb-1">Zamonaviy Klinika</h4>-->
+                                            <img src="images/lorent1.jpg" alt="Trulli" width=100% >
+                                        </div>
+                                      
+                                    </div>
+                                    
+                                    <br/>
+                                     <br/>
+                                      <br/>
+                                       <br/>
+                                        
+
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="w-100 mr-2">
+                                                <div class="progress" style="height: 6px">
+                                                    <div class="progress-bar bg-danger" style="width: 40%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="ml-2 w-100">
+                                                <div class="progress" style="height: 6px">
+                                                    <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+
+                
+
+               
+
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="card">
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
+                        <div class="card">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12 col-xxl-12">
+                        <div class="card">
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+
+    <!-- Chartjs -->
+    <script src="./plugins/chart.js/Chart.bundle.min.js"></script>
+    <!-- Circle progress -->
+    <script src="./plugins/circle-progress/circle-progress.min.js"></script>
+    <!-- Datamap -->
+    <script src="./plugins/d3v3/index.js"></script>
+    <script src="./plugins/topojson/topojson.min.js"></script>
+    <script src="./plugins/datamaps/datamaps.world.min.js"></script>
+    <!-- Morrisjs -->
+    <script src="./plugins/raphael/raphael.min.js"></script>
+    <script src="./plugins/morris/morris.min.js"></script>
+    <!-- Pignose Calender -->
+    <script src="./plugins/moment/moment.min.js"></script>
+    <script src="./plugins/pg-calendar/js/pignose.calendar.min.js"></script>
+    <!-- ChartistJS -->
+    <script src="./plugins/chartist/js/chartist.min.js"></script>
+    <script src="./plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+
+
+
+    <script src="./js/dashboard/dashboard-1.js"></script>
+
+</body>
+
+</html>
